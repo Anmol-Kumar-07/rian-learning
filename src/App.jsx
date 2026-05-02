@@ -18,7 +18,7 @@ const MODEL_NAME = "gemini-1.5-flash";
 
 // 2. FIREBASE CONFIG (Paste your config from Step 1 here)
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+// import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
