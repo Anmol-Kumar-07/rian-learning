@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+/* Import premium academic fonts 
+  - Merriweather: for elegant, traditional University headings
+  - Inter: for highly readable, modern UI text
+*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html, body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #f8fafc; /* Slate-50 background to match the React app */
+    margin: 0;
+    padding: 0;
+    color: #0f172a; /* Slate-900 for high-contrast academic reading */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Force serif classes to use the elegant Merriweather font */
+  .font-serif {
+    font-family: 'Merriweather', Georgia, serif;
+  }
+
+  /* Premium Text Selection Color (Academic Rose) */
+  ::selection {
+    background-color: #e11d48; /* Rose-600 */
+    color: #ffffff;
+  }
+  
+  ::-moz-selection {
+    background-color: #e11d48; 
+    color: #ffffff;
+  }
+}
+
+/* Reset the default Vite root container 
+  This fixes the issue where your app was boxed in the middle of the screen!
+*/
+#root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+/* Custom scrollbar styling matching the Slate & Blue Theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9; /* Slate-100 */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #94a3b8; /* Slate-400 */
+  border-radius: 8px;
+  border: 2px solid #f1f5f9; /* Creates a nice padding effect */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1e40af; /* Blue-800 - Academic Blue on hover */
+}
