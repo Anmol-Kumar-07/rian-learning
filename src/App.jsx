@@ -208,7 +208,23 @@ export default function App() {
         return () => unsubscribe();
     }, []);
 
-    // Custom setDb function that updates UI immediately AND saves to Cloud
+    // // Custom setDb function that updates UI immediately AND saves to Cloud
+    // const setDb = async (newDbOrUpdater) => {
+    //     let newState = typeof newDbOrUpdater === 'function' ? newDbOrUpdater(db) : newDbOrUpdater;
+        
+    //     // 1. Update UI instantly
+    //     setDbState(newState); 
+        
+    //     // 2. Sync changes to the cloud
+    //     try {
+    //         await setDoc(doc(firestore, 'rian_cloud', 'main_database'), newState);
+    //     } catch (error) {
+    //         console.error("Error syncing to cloud:", error);
+    //         alert("Warning: Failed to sync changes to the cloud.");
+    //     }
+    // };
+
+// Custom setDb function that updates UI immediately AND saves to Cloud
     const setDb = async (newDbOrUpdater) => {
         let newState = typeof newDbOrUpdater === 'function' ? newDbOrUpdater(db) : newDbOrUpdater;
         
@@ -217,12 +233,17 @@ export default function App() {
         
         // 2. Sync changes to the cloud
         try {
-            await setDoc(doc(firestore, 'rian_cloud', 'main_database'), newState);
+            // YAHAN HUMNE TRICK LAGAYI HAI: Data ko cloud pe bhejne se pehle filter/clean karna
+            const cleanState = JSON.parse(JSON.stringify(newState));
+            
+            // Ab clean kiya hua data bhej rahe hain
+            await setDoc(doc(firestore, 'rian_cloud', 'main_database'), cleanState);
         } catch (error) {
             console.error("Error syncing to cloud:", error);
             alert("Warning: Failed to sync changes to the cloud.");
         }
     };
+
 
     if (isDbLoading) {
         return (
