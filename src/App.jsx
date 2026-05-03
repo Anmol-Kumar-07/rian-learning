@@ -231,13 +231,38 @@ export default function App() {
         // 1. Update UI instantly
         setDbState(newState); 
         
+        // --- ADVANCED FIREBASE SANITIZER ---
+        // Yeh function "Array ke andar Array" aur undefined data dono ko fix karega
+        const sanitizeForFirestore = (data) => {
+            if (data === null || data === undefined) return null;
+            if (typeof data !== 'object') return data;
+            
+            // Agar yeh array hai, toh check karo iske andar koi aur array toh nahi
+            if (Array.isArray(data)) {
+                return data.map(item => {
+                    if (Array.isArray(item)) {
+                        // Firebase Array ke andar Array allow nahi karta, isliye use text bana do
+                        return JSON.stringify(item); 
+                    }
+                    return sanitizeForFirestore(item);
+                });
+            }
+            
+            // Object/Dictionary ke liye
+            const cleaned = {};
+            for (const key in data) {
+                if (data[key] !== undefined) {
+                    cleaned[key] = sanitizeForFirestore(data[key]);
+                }
+            }
+            return cleaned;
+        };
+        // ------------------------------------
+
         // 2. Sync changes to the cloud
         try {
-            // YAHAN HUMNE TRICK LAGAYI HAI: Data ko cloud pe bhejne se pehle filter/clean karna
-            const cleanState = JSON.parse(JSON.stringify(newState));
-            
-            // Ab clean kiya hua data bhej rahe hain
-            await setDoc(doc(firestore, 'rian_cloud', 'main_database'), cleanState);
+            const safeState = sanitizeForFirestore(newState);
+            await setDoc(doc(firestore, 'rian_cloud', 'main_database'), safeState);
         } catch (error) {
             console.error("Error syncing to cloud:", error);
             alert("Warning: Failed to sync changes to the cloud.");
