@@ -13,8 +13,8 @@ import { getFirestore, doc, onSnapshot, setDoc } from 'firebase/firestore';
 
 // --- CONFIGURATION ---
 // 1. GEMINI API KEY (From your .env file)
-const apiKey = "AIzaSyBqzF6bL4fJFggsqggSK5bwnboNkMqe49Y"; 
-const MODEL_NAME = "gemini-1.5-flash";
+const apiKey = "AIzaSyBh-7HDx7aNYf47jPAJH06-H-PWqzqm4N8"; 
+const MODEL_NAME = "gemini-2.5-flash";
 
 // 2. FIREBASE CONFIG (Paste your config from Step 1 here)
 // Import the functions you need from the SDKs you need
